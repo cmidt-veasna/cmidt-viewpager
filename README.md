@@ -5,7 +5,7 @@
 ## Install the CMIDT ViewPager
 
 1. Make sure bower is installed.
-2. Run the following command: bower install https://github.com:cmidt-veasna/cmidt-viewpager.git
+2. Run the following command: bower install https://github.com/cmidt-veasna/cmidt-viewpager.git
 
 ## Define ViewPager
 
