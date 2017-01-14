@@ -1,33 +1,23 @@
-# \<cmidt-viewpager\>
+# cmidt-viewpager
 
 
 
-## Install the Polymer-CLI
+## Install the CMIDT ViewPager
 
-First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed. Then run `polymer serve` to serve your application locally.
+1. Make sure bower is installed.
+2. Run the following command: bower install https://github.com:cmidt-veasna/cmidt-viewpager.git
 
-## Viewing Your Application
+## Define ViewPager
 
+```html
+<cmidt-viewpager id="pager" items="[[array]]">
+    <template>
+        <div>....</div>
+    </template>
+</cmidt-viewpager>
 ```
-$ polymer serve
-```
 
-## Building Your Application
-
-```
-$ polymer build
-```
-
-This will create a `build/` folder with `bundled/` and `unbundled/` sub-folders
-containing a bundled (Vulcanized) and unbundled builds, both run through HTML,
-CSS, and JS optimizers.
-
-You can serve the built versions by giving `polymer serve` a folder to serve
-from:
-
-```
-$ polymer serve build/bundled
-```
+For more information reading to https://cmidt-veasna.github.io/polymer-cmidt-viewpager
 
 ## Running Tests
 
@@ -35,4 +25,5 @@ $ polymer serve build/bundled
 $ polymer test
 ```
 
-Your application is already set up to be tested via [web-component-tester](https://github.com/Polymer/web-component-tester). Run `polymer test` to run your application's test suite locally.
+ViewPager is already define certain test scenario however it does not cover all the case. We will Update it in the future. To test
+ViewPager run `polymer test` to under Cmidt ViewPager.
