@@ -612,14 +612,16 @@ Cmidt.PAGE_STATE_SETTLING = 3;
                 this._indicatorItem = [];
                 this._attachedItems = this._attachedItems || [];
                 for(var i = 0; i < child.length; i++) {
-                    var item = {};
-                    item.position = i;
-                    item.object = child[i];
-                    item.scrolling = false;
-                    item.template = false;
-                    this._attachedItems.push(item);
-                    this.push('_indicatorItem', i);
-                    this.translate3d((i * this._viewportWidth) + 'px', 0, 0, item.object);
+                    if (child[i].localName != "template") {
+                        var item = {};
+                        item.position = i;
+                        item.object = child[i];
+                        item.scrolling = false;
+                        item.template = false;
+                        this._attachedItems.push(item);
+                        this.push('_indicatorItem', i);
+                        this.translate3d((i * this._viewportWidth) + 'px', 0, 0, item.object);
+                    }
                 }
             }
         },
