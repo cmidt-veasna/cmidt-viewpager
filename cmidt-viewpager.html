@@ -1048,16 +1048,19 @@ Cmidt.PAGE_STATE_SETTLING = 3;
 
         _onResizeHandler: function(event) {
             this.updateViewportBoundaries();
-            if (this._attachedItems){
+            // prevent the translate3d going on when viewport is 0 this happen in certain
+            // case such as iron-page selector where when page is hidding which cause ViewPager size to 0
+            // and it trigger resize callback which cause strange behavior on to ViewPager scroll.
+            if (this._attachedItems && this._viewportWidth > 0){
                 // re-calculate scroll left as width might changed.
                 // animation and fire state are muted as not changed to state or position.
                 // TODO: ? we might fire resize instead so that host can update the page accordingly ?
-                this._setCurrentItemInternal(this.currentItem, true, true);
                 var item;
                 for (var i = 0; i < this._attachedItems.length; i++){
                     item = this._attachedItems[i];
                     this.translate3d((item.position * this._viewportWidth)+'px', 0, 0, item.object);
                 }
+                this._setCurrentItemInternal(this.currentItem, true, true);
             }
         },
 
@@ -1296,7 +1299,7 @@ Cmidt.PAGE_STATE_SETTLING = 3;
                     // trigger selector indicator
                     this._currentItemInternal = requestIndexItem;
                     this._scrollPageTo( (requestIndexItem * this._viewportWidth), !noAnimation, !noFireState);
-                } else if (this._scrollPosition % this._viewportWidth != 0) {
+                } else if (this._scrollPosition % this._viewportWidth != 0 || this._scrollPosition != this._scrollLeft) {
                     // look like we need to scroll back the original position
                     this._scrollPageTo( (requestIndexItem * this._viewportWidth), !noAnimation, !noFireState);
                 }
@@ -1323,6 +1326,9 @@ Cmidt.PAGE_STATE_SETTLING = 3;
                 // of wheel event. delay 80ms to reset the state. Normally wheel event should send
                 // frequently less than 80ms
                 this._shouldStopWheelPropagation = true;
+                if (this._scrollLeftTo != this._scrollLeft) {
+                    this.scroll(this._scrollLeftTo, this._scrollTop);
+                }
             }
             if (fireState) {
                 this.fire('page-state-changed', {state: Cmidt.PAGE_STATE_SETTLING});
