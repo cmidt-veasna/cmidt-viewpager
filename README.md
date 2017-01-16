@@ -17,7 +17,7 @@
 </cmidt-viewpager>
 ```
 
-For more information visit https://cmidt-veasna.github.io/polymer-cmidt-viewpager
+For more information visit https://cmidt-veasna.github.io/polymer/components/cmidt-viewpager/
 
 ## Running Tests
 
