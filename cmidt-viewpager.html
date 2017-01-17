@@ -604,6 +604,16 @@ Cmidt.PAGE_STATE_SETTLING = 3;
 
         attached: function() {
             this.updateViewportBoundaries();
+            if (this._viewportWidth == 0) {
+                // fixed problem with certain case where this.offsetWidth is return 0
+                // where a bit delay will provide the size.
+                if (this.items && this.items.length > 0){
+                    this.async(function() {
+                        this.attached();
+                    }, 50);
+                }
+                return;
+            }
             if(this.items && this.items.length > 0) {
                 this._populate();
                 this._populateIndicator();
