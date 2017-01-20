@@ -9,10 +9,23 @@ Polymer ViewPager support unlimited page content. If anyone happen to be working
 
 ## Define ViewPager
 
+<!---
+```
+<custom-element-demo>
+  <template>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="cmidt-viewpager.html">
+    <next-code-block></next-code-block>
+  </template>
+</custom-element-demo>
+```
+-->
 ```html
-<cmidt-viewpager id="pager" items="[[array]]">
-    <template>
-        <div>....</div>
+<cmidt-viewpager items="[1,2,3,4]" style="height:200px">
+	<template>
+      <div>
+        <div style="width:30px; margin: 32px auto;">[[item]]</div>
+      </div>
     </template>
 </cmidt-viewpager>
 ```
