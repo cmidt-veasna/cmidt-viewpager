@@ -1,6 +1,6 @@
 # cmidt-viewpager
 
-
+Polymer ViewPager support unlimited page content. If anyone happen to be working on Android before, Polymer Cmidt ViewPager is working in similar fashion.
 
 ## Install the CMIDT ViewPager
 
