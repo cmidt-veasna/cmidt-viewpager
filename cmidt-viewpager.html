@@ -1057,11 +1057,15 @@ Cmidt.PAGE_STATE_SETTLING = 3;
         },
 
         _onResizeHandler: function(event) {
+            var previousViewPort = this._viewportWidth;
             this.updateViewportBoundaries();
             // prevent the translate3d going on when viewport is 0 this happen in certain
             // case such as iron-page selector where when page is hidding which cause ViewPager size to 0
             // and it trigger resize callback which cause strange behavior on to ViewPager scroll.
-            if (this._attachedItems && this._viewportWidth > 0){
+            //
+            // ** Check viewport if only the size is change then we rearrange the item position. This could cause
+            // problem when child view of ViewPager also trigger the change via resize behavior
+            if (this._attachedItems && this._viewportWidth > 0 && this._viewportWidth != previousViewPort){
                 // re-calculate scroll left as width might changed.
                 // animation and fire state are muted as not changed to state or position.
                 // TODO: ? we might fire resize instead so that host can update the page accordingly ?
