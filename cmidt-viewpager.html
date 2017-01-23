@@ -706,10 +706,12 @@ Cmidt.PAGE_STATE_SETTLING = 3;
                     }
 
                     //
+                    this.$.container.style['overflow-x'] = 'hidden';
                     this._populate(true);
                     this._populateIndicator();
                     this.toggleClass('hide', this.currentItem == 0, this.$.previous);
                     this.toggleClass('hide', this.currentItem == this.items.length - 1, this.$.next);
+                    this.$.container.style['overflow-x'] = 'scroll';
                 }
             } else if (change.path === 'items.splices') {
                 if (this._viewportWidth != 0 && this._viewportHeight != 0){
