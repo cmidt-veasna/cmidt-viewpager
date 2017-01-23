@@ -688,31 +688,29 @@ Cmidt.PAGE_STATE_SETTLING = 3;
                 this._physicalIndexForKey = {};
                 this._attachedItems = this._attachedItems || [];
                 this._reusableItems = this._reusableItems || [];
-                if (this._viewportWidth != 0 && this._viewportHeight != 0){
-                    // this mean a complete change to the entire items containing object.
-                    // reset scroll, current item and rebind
-                    if (this.currentItem != 0){
-                        this.currentItem = 0;
-                        this._currentItemInternal = 0;
-                    } else {
-                        // explicitly fire page-selected as the currentItem is 0 no change is being trigger.
-                        // fire this so that the host can use to change accordingly such as custom indicator ...etc
-                        this._onCurrentItemChanged();
-                    }
-
-                    if (this._scrollLeft != 0){
-                        // 0, animate = false, fireState = true
-                        this._scrollPageTo(0, false, false);
-                    }
-
-                    //
-                    this.$.container.style['overflow-x'] = 'hidden';
-                    this._populate(true);
-                    this._populateIndicator();
-                    this.toggleClass('hide', this.currentItem == 0, this.$.previous);
-                    this.toggleClass('hide', this.currentItem == this.items.length - 1, this.$.next);
-                    this.$.container.style['overflow-x'] = 'scroll';
+                // this mean a complete change to the entire items containing object.
+                // reset scroll, current item and rebind
+                if (this.currentItem != 0){
+                    this.currentItem = 0;
+                    this._currentItemInternal = 0;
+                } else {
+                    // explicitly fire page-selected as the currentItem is 0 no change is being trigger.
+                    // fire this so that the host can use to change accordingly such as custom indicator ...etc
+                    this._onCurrentItemChanged();
                 }
+
+                if (this._scrollLeft != 0){
+                    // 0, animate = false, fireState = true
+                    this._scrollPageTo(0, false, false);
+                }
+
+                //
+                this.$.container.style['overflow-x'] = 'hidden';
+                this._populate(true);
+                this._populateIndicator();
+                this.toggleClass('hide', this.currentItem == 0, this.$.previous);
+                this.toggleClass('hide', this.currentItem == this.items.length - 1, this.$.next);
+                this.$.container.style['overflow-x'] = 'scroll';
             } else if (change.path === 'items.splices') {
                 if (this._viewportWidth != 0 && this._viewportHeight != 0){
                     var changeInfo = change.value.indexSplices[0];
@@ -1076,7 +1074,16 @@ Cmidt.PAGE_STATE_SETTLING = 3;
                     item = this._attachedItems[i];
                     this.translate3d((item.position * this._viewportWidth)+'px', 0, 0, item.object);
                 }
+                // below is issue when add ViewPager into element under iron-pages. When we switch between page
+                // it cause the size of ViewPager changing to 0. This prevent indicator to be render if items change
+                // but the current page is still hidden. Second issue is when the size of ViewPager is 0 if items has
+                // change re-populate items cause the item to overlap as the size of ViewPager is 0 then we don't know
+                // which distance we need to translate the page to.
+                // trigger overflow-x and re-populate indicator to prevent issue above.
+                this.$.container.style['overflow-x'] = 'hidden';
                 this._setCurrentItemInternal(this.currentItem, true, true);
+                this._populateIndicator();
+                this.$.container.style['overflow-x'] = 'scroll';
             }
         },
 
